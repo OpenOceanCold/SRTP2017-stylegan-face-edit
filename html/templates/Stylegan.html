@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>SRTP_Ocean</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        div#head {
+            color: black;
+            position: absolute;
+            left: 700px;
+            top: 0px;
+        }
+        
+        p#subtitle {
+            position: absolute;
+            left: 300px;
+            top: 60px;
+            width: 90px;
+        }
+        
+        div#img-upload {
+            position: absolute;
+            width: auto;
+            height: 53px;
+            left: 10px;
+            top: 70px;
+        }
+        
+        div#choose-network {
+            position: absolute;
+            width: auto;
+            height: auto;
+            left: 10px;
+            top: 160px;
+        }
+        
+        div#input-param {
+            position: absolute;
+            width: auto;
+            height: auto;
+            left: 10px;
+            top: 350px;
+        }
+        
+        div#img-show {
+            position: absolute;
+            width: auto;
+            height: auto;
+            left: 10px;
+            top: 750px;
+        }
+        
+        img {
+            position: absolute;
+            width: 1024px;
+            height: 1024px;
+            left: 400px;
+            top: 110px;
+        }
+        
+        div#footer {
+            position: absolute;
+            width: auto;
+            height: auto;
+            left: 10px;
+            top: 850px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="head">
+        <header>
+            <h1>Face Encoder and Edit</h1>
+            <p id="subtitle">by Ocean</p>
+        </header>
+    </div>
+
+    <!-- Main -->
+    <div id="img-upload">
+        <h2>1.选择图片：</h2>
+        <form action="/src_get" method="GET">
+            源图片路径:&emsp;&emsp;<input type="text" name="srcpath" />&emsp;
+            <input type="submit" value="提取人脸" />
+        </form>
+    </div>
+    <div id="choose-network">
+        <h2>2.选择模型：</h2>
+        <form action="/face_encode" method="GET">
+            <input type="radio" name="network" value="1" checked>官方欧美人
+            <br>
+            <input type="radio" name="network" value="2">黄种人
+            <br>
+            <input type="radio" name="network" value="3">明星
+            <br>
+            <input type="radio" name="network" value="4">模特
+            <br>
+            <input type="radio" name="network" value="5">网红
+            <br> 人脸图片路径:&emsp;
+            <input type="text" name="facepath" />&emsp;
+            <input type="submit" value="人脸编码" />
+        </form>
+    </div>
+    </br>
+    <form action="/face_edit" method="GET">
+        <div id="face-param">
+            <div id="input-param">
+                <h2>3.人脸属性调整：</h2>
+                人脸编码路径:&emsp;<input type="text" name="npypath" /><br>
+                <br>
+                <input type="radio" name="network2" value="1" checked>官方欧美人
+                <br>
+                <input type="radio" name="network2" value="2">黄种人
+                <br>
+                <input type="radio" name="network2" value="3">明星
+                <br>
+                <input type="radio" name="network2" value="4">模特
+                <br>
+                <input type="radio" name="network2" value="5">网红
+                <br> 颜值：
+                <input type="range" name="beauty" max=10 min=-10 value=0 step="2" onchange="document.getElementById('show1').innerHTML=value"> <span id="show1">&emsp;</span>
+                <br> 性别：
+                <input type="range" name="gender" max=10 min=-10 value=0 step="2" onchange="document.getElementById('show2').innerHTML=value"> <span id="show2">&emsp;</span>
+                <br> 脸长：
+                <input type="range" name="height" max=10 min=-10 value=0 step="2" onchange="document.getElementById('show3').innerHTML=value"> <span id="show3">&emsp;</span>
+                <br> 脸宽：
+                <input type="range" name="width" max=10 min=-10 value=0 step="2" onchange="document.getElementById('show4').innerHTML=value"> <span id="show4">&emsp;</span>
+                <br> 年龄：
+                <input type="range" name="age" max=10 min=-10 value=0 step="2" onchange="document.getElementById('show5').innerHTML=value"> <span id="show5">&emsp;</span>
+                <br> 上下：
+                <input type="range" name="horizontal" max=10 min=-10 value=0 step="2" onchange="document.getElementById('show6').innerHTML=value"> <span id="show6">&emsp;</span>
+                <br> 左右：
+                <input type="range" name="vertical" max=10 min=-10 value=0 step="2" onchange="document.getElementById('show7').innerHTML=value"> <span id="show7">&emsp;</span>
+            </div>
+        </div>
+        </br>
+        <div id="img-show">
+            <h2>4.生成图片：</h2>
+            <input type="submit" value="生成图片" />
+        </div>
+    </form>
+
+    <br>
+    <!-- result -->
+    {%if face_detected%}
+    <div id="img">
+        <img src={{face_detected}} alt="detect_face">
+    </div>
+    {%endif %} {%if face_generated%}
+    <div id="img">
+        <img src={{face_generated}} alt="generate_face">
+    </div>
+    {%endif %} {%if face_edited%}
+    <div id="img">
+        <img src={{face_edited}} alt="edit_face">
+    </div>
+    {%endif %}
+    <!-- Footer -->
+    <footer id="footer">
+        <div id="footer">
+            <h2>Only For Study!</h2>
+        </div>
+    </footer>
+</body>
+
+</html>
